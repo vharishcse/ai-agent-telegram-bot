@@ -96,26 +96,6 @@ Then, open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
 
 ---
 
-## 🔥 Features Demonstration  
-
-### 🎥 **Demo Video**
-🔗 [Loom Video Link]()
-
----
-
-## 📝 **Submission Checklist**  
-
-✅ **Bot is working** (AI responses, user registration)  
-✅ **File analysis added** (Handles uploaded files)  
-✅ **Web search enabled** (Returns search results)  
-✅ **Sentiment analysis integrated** (Analyzes emotions)  
-✅ **Analytics dashboard (Flask)**  
-✅ **Code pushed to GitHub**  
-✅ **Loom video recorded**  
-✅ **Email sent to BreakoutAI**  
-
----
-
 ## 📌 **Contributing**  
 
 👨‍💻 Contributions are welcome! If you'd like to improve the bot, feel free to fork this repo and submit a pull request.  
