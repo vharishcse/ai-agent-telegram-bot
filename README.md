@@ -17,16 +17,16 @@ An AI-powered **Telegram bot** using **Gemini AI**, **MongoDB**, and **Flask**, 
 ---
 
 ## 📌 Tech Stack  
-
-| Component         | Technology Used |
-|------------------|----------------|
+ _____________________________________________________________
+| Component        | Technology Used                          |
+|------------------|------------------------------------------|
 | **Backend**      | Python, Flask, MongoDB, Telegram Bot API |
-| **AI Model**     | Google Gemini AI |
-| **Database**     | MongoDB (via PyMongo) |
-| **NLP**          | TextBlob (Sentiment Analysis) |
-| **Web Scraping** | DuckDuckGo API (for web search) |
-| **Deployment**   | Local / Cloud hosting |
-
+| **AI Model**     | Google Gemini AI                         |
+| **Database**     | MongoDB (via PyMongo)                    |
+| **NLP**          | TextBlob (Sentiment Analysis)            |
+| **Web Scraping** | DuckDuckGo API (for web search)          |
+| **Deployment**   | Local / Cloud hosting                    |
+|__________________|__________________________________________|
 ---
 
 ## 🛠️ Setup Guide  
