@@ -1,4 +1,5 @@
 import os
+from serpapi import GoogleSearch
 import logging
 import google.generativeai as genai
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton
@@ -72,28 +73,47 @@ async def handle_message(update: Update, context: CallbackContext) -> None:
     await update.message.reply_text(reply)
 
 # File Handling
+import os
+
 async def handle_document(update: Update, context: CallbackContext):
     file_id = update.message.document.file_id
     file = await context.bot.get_file(file_id)
 
-    # Download file
-    file_path = f"downloads/{update.message.document.file_name}"
+    # Ensure the "downloads" directory exists
+    download_dir = "downloads"
+    os.makedirs(download_dir, exist_ok=True)
+
+    # Define file path
+    file_path = os.path.join(download_dir, update.message.document.file_name)
+
+    # Download the file
     await file.download_to_drive(file_path)
 
-    # Send file to Gemini for analysis
-    with open(file_path, "rb") as f:
-        response = model.generate_content(["Describe this file:", f.read()])
+    # Send confirmation message
+    await update.message.reply_text(f"✅ File '{update.message.document.file_name}' uploaded successfully!")
 
-    description = response.text
+    # Optional: Analyze only PDF or Word files
+    if file_path.endswith(".pdf") or file_path.endswith(".docx"):
+        try:
+            with open(file_path, "rb") as f:
+                file_content = f.read()
 
-    # Save file metadata in MongoDB
-    db.file_metadata.insert_one({
-        "chat_id": update.message.chat_id,
-        "filename": update.message.document.file_name,
-        "description": description
-    })
+            # Send file to Gemini AI for analysis
+            response = model.generate_content(["Describe this file:", file_content])
+            description = response.text
 
-    await update.message.reply_text(f"File Analysis:\n{description}")
+            # Save file metadata in MongoDB
+            db.file_metadata.insert_one({
+                "chat_id": update.message.chat_id,
+                "filename": update.message.document.file_name,
+                "description": description
+            })
+
+            await update.message.reply_text(f"📄 **File Analysis:**\n{description}")
+
+        except Exception as e:
+            await update.message.reply_text("⚠️ Error analyzing the file.")
+            logging.error(f"File Processing Error: {e}")
 
 # Web Search
 async def web_search(update: Update, context: CallbackContext):
@@ -102,19 +122,25 @@ async def web_search(update: Update, context: CallbackContext):
         return
 
     query = " ".join(context.args)
-    search_url = f"https://api.duckduckgo.com/?q={query}&format=json"
+    api_key = os.getenv("SERPAPI_KEY")  # Store API key in .env file
+
+    params = {
+        "q": query,
+        "api_key": api_key
+    }
 
     try:
-        response = requests.get(search_url).json()
-        search_results = response.get("RelatedTopics", [])
+        search = GoogleSearch(params)
+        results = search.get_dict()
+        search_results = results.get("organic_results", [])
 
         if not search_results:
-            await update.message.reply_text("No results found.")
+            await update.message.reply_text("No results found. Try a different query.")
             return
 
         # Extract top 3 search results
         top_results = "\n".join(
-            [f"- [{r['Text']}]({r['FirstURL']})" for r in search_results[:3] if "Text" in r and "FirstURL" in r]
+            [f"- [{r['title']}]({r['link']})" for r in search_results[:3]]
         )
 
         await update.message.reply_text(f"🔍 **Top Search Results:**\n{top_results}", parse_mode="Markdown")
@@ -143,13 +169,53 @@ async def analyze_sentiment(update: Update, context: CallbackContext):
 
         await update.message.reply_text(f"Sentiment Analysis: {sentiment_response}")
 
+#handle document
+async def upload_instruction(update: Update, context: CallbackContext):
+    await update.message.reply_text("Please send a document to analyze.")
+
+#handle chat Command
+async def chat(update: Update, context: CallbackContext):
+    user_message = " ".join(context.args)  # Get the text after "/chat"
+
+    if not user_message:
+        await update.message.reply_text("Please enter a message after /chat.")
+        return
+
+    try:
+        # Generate response from Gemini AI
+        prompt = f"You are a friendly AI assistant. Respond in a casual and helpful tone. User: {user_message}"
+        response = model.generate_content(prompt)
+        reply = response.text  # Extract AI response
+    except Exception as e:
+        reply = "Error processing your request. Please try again later."
+        logging.error(f"Gemini AI Error: {e}")
+
+    await update.message.reply_text(reply)
+
+#help command
+async def help_command(update: Update, context: CallbackContext):
+    help_text = """🛠 **Available Commands:**
+    
+    /start - Register with the bot  
+    /chat <message> - Chat with the AI  
+    /upload - Upload and analyze a document  
+    /websearch <query> - Perform a web search  
+    /sentiment <text> - Analyze sentiment  
+
+    🔹 *Try sending a message or uploading a file!*"""
+    
+    await update.message.reply_text(help_text, parse_mode="Markdown")
+
 # Handlers
+app.add_handler(CommandHandler("chat", chat))
 app.add_handler(CommandHandler("start", start))
 app.add_handler(MessageHandler(filters.CONTACT, save_contact))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+app.add_handler(CommandHandler("upload", upload_instruction))
 app.add_handler(MessageHandler(filters.Document.ALL, handle_document))
 app.add_handler(CommandHandler("websearch", web_search))
 app.add_handler(CommandHandler("sentiment", analyze_sentiment))
+app.add_handler(CommandHandler("help", help_command))
 
 if __name__ == "__main__":
     print("Starting the bot...")

@@ -14,9 +14,8 @@ An AI-powered **Telegram bot** using **Gemini AI**, **MongoDB**, and **Flask**, 
 ✅ **File analysis** (Gemini AI describes uploaded documents)  
 ✅ **Analytics dashboard** (Flask-based user & message tracking)  
 
----
-
 ## 📌 Tech Stack  
+<<<<<<< HEAD
  _____________________________________________________________
 | Component        | Technology Used                          |
 |------------------|------------------------------------------|
@@ -28,6 +27,18 @@ An AI-powered **Telegram bot** using **Gemini AI**, **MongoDB**, and **Flask**, 
 | **Deployment**   | Local / Cloud hosting                    |
 |__________________|__________________________________________|
 ---
+=======
+
+| **Component**     | **Technology Used**                         |
+|------------------|-------------------------------------|
+| **Backend**      | Python, Flask, MongoDB, Telegram Bot API |
+| **AI Model**     | Google Gemini AI                         |
+| **Database**     | MongoDB (via PyMongo)                   |
+| **NLP**          | TextBlob (Sentiment Analysis)           |
+| **Web Scraping** | DuckDuckGo API (for web search)         |
+| **Deployment**   | Local / Cloud hosting                   |
+
+>>>>>>> c582207 (Updated bot.py and dashboard.py, added templates folder)
 
 ## 🛠️ Setup Guide  
 
@@ -94,8 +105,11 @@ python dashboard.py
 ```
 Then, open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
 
+<<<<<<< HEAD
 ---
 
+=======
+>>>>>>> c582207 (Updated bot.py and dashboard.py, added templates folder)
 ## 📌 **Contributing**  
 
 👨‍💻 Contributions are welcome! If you'd like to improve the bot, feel free to fork this repo and submit a pull request.  
