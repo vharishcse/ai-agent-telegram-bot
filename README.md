@@ -1,4 +1,3 @@
-```md
 # 🤖 AI Agent Telegram Bot  
 
 An AI-powered **Telegram bot** using **Gemini AI**, **MongoDB**, and **Flask**, featuring **web search**, **sentiment analysis**, **file analysis**, and a **user analytics dashboard**.
@@ -15,19 +14,6 @@ An AI-powered **Telegram bot** using **Gemini AI**, **MongoDB**, and **Flask**, 
 ✅ **Analytics dashboard** (Flask-based user & message tracking)  
 
 ## 📌 Tech Stack  
-<<<<<<< HEAD
- _____________________________________________________________
-| Component        | Technology Used                          |
-|------------------|------------------------------------------|
-| **Backend**      | Python, Flask, MongoDB, Telegram Bot API |
-| **AI Model**     | Google Gemini AI                         |
-| **Database**     | MongoDB (via PyMongo)                    |
-| **NLP**          | TextBlob (Sentiment Analysis)            |
-| **Web Scraping** | DuckDuckGo API (for web search)          |
-| **Deployment**   | Local / Cloud hosting                    |
-|__________________|__________________________________________|
----
-=======
 
 | **Component**     | **Technology Used**                         |
 |------------------|-------------------------------------|
@@ -38,14 +24,13 @@ An AI-powered **Telegram bot** using **Gemini AI**, **MongoDB**, and **Flask**, 
 | **Web Scraping** | DuckDuckGo API (for web search)         |
 | **Deployment**   | Local / Cloud hosting                   |
 
->>>>>>> c582207 (Updated bot.py and dashboard.py, added templates folder)
 
 ## 🛠️ Setup Guide  
 
 ### **1️⃣ Clone the Repository**  
 ```sh
-git clone <your_repo_url>
-cd ai_agent_telegram_bot
+git clone https://github.com/vharishcse/ai-agent-telegram-bot.git
+cd ai-agent-telegram-bot
 ```
 
 ### **2️⃣ Create a Virtual Environment**  
@@ -83,12 +68,14 @@ python dashboard.py
 
 ## 📜 Available Commands  
 
-| Command            | Description |
-|-------------------|-------------|
-| `/start`         | Registers the user |
-| `/websearch AI trends` | Performs web search |
-| `/sentiment I love this bot!` | Analyzes sentiment of the text |
-| `/help`          | Displays available commands |
+```plaintext
+/start - Register with the bot
+/chat <message> - Chat with the AI
+/upload - Upload and analyze a document
+/websearch <query> - Perform a web search
+/sentiment <text> - Analyze sentiment
+/help - Display available commands
+```
 
 ---
 
@@ -105,11 +92,39 @@ python dashboard.py
 ```
 Then, open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
 
-<<<<<<< HEAD
+## 🛠 Dependencies  
+Updated `requirements.txt`:
+```
+Flask==3.1.0
+google-ai-generativelanguage==0.6.15
+google-api-core==2.24.1
+google-api-python-client==2.160.0
+google-auth==2.38.0
+google-generativeai==0.8.4
+googleapis-common-protos==1.66.0
+grpcio==1.70.0
+grpcio-status==1.70.0
+pymongo==4.11
+requests==2.32.3
+textblob==0.19.0
+python-dotenv==1.0.1
+python-telegram-bot==21.10
+nltk==3.9.1
+Werkzeug==3.1.3
+Jinja2==3.1.5
+```
+
+## 🔄 Updating and Pushing to GitHub  
+
+After making changes, use the following commands to push updates:
+```sh
+git add .
+git commit -m "Updated README and dependencies"
+git push origin main
+```
+
 ---
 
-=======
->>>>>>> c582207 (Updated bot.py and dashboard.py, added templates folder)
 ## 📌 **Contributing**  
 
 👨‍💻 Contributions are welcome! If you'd like to improve the bot, feel free to fork this repo and submit a pull request.  
@@ -126,4 +141,3 @@ Then, open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
 ## 📜 **License**  
 This project is **open-source** and available under the **MIT License**.
 
-```
